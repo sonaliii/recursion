@@ -5,30 +5,21 @@
 
 // But in stead we're going to implement it from scratch:
 var getElementsByClassName = function (className) {
-  // your code here
 
-    var node = document.body;
-    var result = [];
-
-    if (node.classList.contains(className)) {
-        result.push(node);
-    }
-
-    for (var i = 1; i < node.childNodes.length; i++) {
-        var children = "";
-        var child = node.childNodes[i];
-        if (child.classList.contains(className)) {
-            children += child;
-            result.push(children);
+    function recursiveElements(className, node) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var child = node.childNodes[i];
+            if(child.classList) {
+                if (child.classList.contains(className)) {
+                    result.push(child);
+                }
+            }
+            recursiveElements(className, child);
         }
-        var nodeChild = node.childNodes[i];
-        getElementsByClassName(className)
     }
 
-    if (nodeChild.classList.contains(className)) {
-        nodeChild.appendTo(result);
-    }
-
+    var result = [];
+    recursiveElements(className, document.body);
     return result;
 };
 
